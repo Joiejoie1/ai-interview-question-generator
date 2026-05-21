@@ -1,7 +1,10 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import OpenAI from "openai";
 import { NextResponse } from "next/server";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const client = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+});
 
 export async function POST(req: Request) {
   try {
@@ -14,29 +17,33 @@ export async function POST(req: Request) {
       );
     }
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-    });
-
-    const prompt = `
-Generate 3 thoughtful interview questions for a ${jobTitle} role.
+    const completion = await client.chat.completions.create({
+      model: "openchat/openchat-7b:free",
+      messages: [
+        {
+          role: "user",
+          content: `Generate 3 thoughtful interview questions for a ${jobTitle} role.
 
 Requirements:
 - Focus on communication, problem-solving, and role-specific thinking
 - Keep questions concise
-- Return only the questions as a numbered list
-`;
+- Return only the questions as a numbered list.`,
+        },
+      ],
+    });
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = completion.choices[0].message.content;
 
-    return NextResponse.json({ questions: text });
-  } catch (error) {
-    console.error(error);
+    return NextResponse.json({
+      questions: text,
+    });
+  } catch (error: any) {
+    console.error("FULL ERROR:", error);
 
     return NextResponse.json(
-      { error: "Something went wrong" },
+      {
+        error: error.message || "Something went wrong",
+      },
       { status: 500 }
     );
   }

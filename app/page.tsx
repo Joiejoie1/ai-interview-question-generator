@@ -35,8 +35,8 @@ export default function Home() {
       }
 
       setQuestions(data.questions);
-    } catch (err) {
-      setError("Failed to generate interview questions.");
+    } catch (err: any) {
+      setError(err.message || "Failed to generate interview questions.");
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="w-full max-w-xl bg-white rounded-2xl shadow-md p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">
+        <h1 className="text-3xl font-bold mb-6 text-center text-black">
           AI Interview Question Generator
         </h1>
 
@@ -54,7 +54,7 @@ export default function Home() {
           placeholder="Enter a job title"
           value={jobTitle}
           onChange={(e) => setJobTitle(e.target.value)}
-          className="w-full border border-gray-300 rounded-lg p-3 mb-4"
+          className="w-full border border-gray-300 rounded-lg p-3 mb-4 font-semibold text-black"
         />
 
         <button
