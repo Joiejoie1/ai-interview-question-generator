@@ -8,7 +8,8 @@ const client = new OpenAI({
 
 export async function POST(req: Request) {
   try {
-    const { jobTitle } = await req.json();
+    const body = await req.json();
+    const jobTitle = body.jobTitle;
 
     if (!jobTitle) {
       return NextResponse.json(
@@ -18,16 +19,17 @@ export async function POST(req: Request) {
     }
 
     const completion = await client.chat.completions.create({
-      model: "openchat/openchat-7b:free",
+      model: "microsoft/phi-3-mini-128k-instruct:free",
       messages: [
         {
           role: "user",
           content: `Generate 3 thoughtful interview questions for a ${jobTitle} role.
 
 Requirements:
-- Focus on communication, problem-solving, and role-specific thinking
+- Focus on communication
+- Focus on problem-solving
 - Keep questions concise
-- Return only the questions as a numbered list.`,
+- Return only a numbered list`,
         },
       ],
     });
@@ -38,11 +40,11 @@ Requirements:
       questions: text,
     });
   } catch (error: any) {
-    console.error("FULL ERROR:", error);
+    console.error("SERVER ERROR:", error);
 
     return NextResponse.json(
       {
-        error: error.message || "Something went wrong",
+        error: error.message || "Server failed",
       },
       { status: 500 }
     );
