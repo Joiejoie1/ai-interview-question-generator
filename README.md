@@ -2,7 +2,7 @@
 
 A simple AI-powered web application that generates thoughtful interview questions based on a job title.
 
-Users can enter a role such as **Customer Success Manager**, and the application uses the Gemini API to generate 3 relevant interview questions focused on communication, problem-solving, and role-specific thinking.
+Users can enter a role such as **Customer Success Manager**, and the application uses the OpenRouter API to generate 3 relevant interview questions focused on communication, problem-solving, and role-specific thinking.
 
 ---
 
@@ -22,7 +22,7 @@ Users can enter a role such as **Customer Success Manager**, and the application
 * Next.js 16
 * TypeScript
 * Tailwind CSS
-* Google Gemini API
+* OpenRouter API
 * React
 
 ---
@@ -64,7 +64,7 @@ npm install
 Create a `.env.local` file in the root directory:
 
 ```env
-GEMINI_API_KEY=your_api_key_here
+OPENROUTER_API_KEY=your_api_key_here
 ```
 
 ### 5. Run the Development Server
@@ -85,11 +85,11 @@ http://localhost:3000
 
 | Variable       | Description           |
 | -------------- | --------------------- |
-| GEMINI_API_KEY | Google Gemini API key |
+| OPENROUTER_API_KEY | OpenRouter API key |
 
 Get your API key from:
 
-https://ai.google.dev/
+https://openrouterai/
 
 ---
 
@@ -112,7 +112,7 @@ Requirements:
 
 ## Tradeoffs & Decisions
 
-* Chose Gemini API because of its generous free tier and simple integration
+* Chose OpenRouter API because of its generous free tier and simple integration
 * Kept the UI intentionally minimal to prioritize clarity and execution speed
 * Used Next.js route handlers to avoid exposing API keys on the client side
 * Focused on maintainable and readable code over unnecessary complexity
@@ -121,14 +121,13 @@ Requirements:
 
 ## Live Demo
 
-Live URL:
-Coming soon
+[View Live Application](https://ai-interview-question-generator-gqti45f45-joy-e60b2f24.vercel.app)
 
 ---
 
 ## Author
 
-Joy [Your Surname]
+Joy Gundu
 
 GitHub:
 https://github.com/Joiejoie1
